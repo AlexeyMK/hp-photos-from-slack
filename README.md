@@ -26,7 +26,7 @@ meteor
 ### …on meteor.com
 
 ```
-meteor deploy yourappname
+meteor deploy slacker
 ```
 
 ## Troubleshooting
