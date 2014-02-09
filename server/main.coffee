@@ -29,8 +29,8 @@ Meteor.startup ->
 
           that.response.writeHead(200, {'Content-Type': 'text/html'})
           that.response.end """
-            #{summaryGraphic()}<br />
-            Chicago, IL<br />
-            #{result.currently.summary}<br />
-            #{Math.round result.currently.temperature}&deg;
+            Current Weather for Chicago, IL
+            #{summaryGraphic()}
+            #{Math.round result.currently.temperature}&deg; and #{result.currently.summary}
+            #{result.currently.precipProbability * 100}% chance of #{if result.currently.precipType? then result.currently.precipType else 'precipitation'}
           """
