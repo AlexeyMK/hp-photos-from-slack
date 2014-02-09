@@ -1,6 +1,9 @@
 {
   "packages": {
     "iron-router": {},
-    "fastclick": {}
+    "fastclick": {},
+    "xml2js": {},
+    "moment": {},
+    "moment-timezone": {}
   }
 }

@@ -13,3 +13,6 @@ iron-router
 fastclick
 underscore
 http
+xml2js
+moment
+moment-timezone
