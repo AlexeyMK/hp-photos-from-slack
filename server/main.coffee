@@ -33,6 +33,7 @@ Meteor.startup ->
             #{summaryGraphic()}
             #{Math.round result.currently.temperature}&deg; and #{result.currently.summary}
             #{result.currently.precipProbability * 100}% chance of #{if result.currently.precipType? then result.currently.precipType else 'precipitation'}
+            <a href="http://forecast.io/#/f/41.8956,-87.6354">View on Forecast.io</a>
           """
 
     @route 'ctatrain',
