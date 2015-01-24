@@ -52,7 +52,7 @@ Meteor.startup ->
 
           stops = ''
           _.each result.ctatt.eta, (stop) ->
-            time = moment(stop.arrT[0], 'YYYYMMDD HH:mm:ss').tz('America/Chicago').fromNow(true)
+            time = moment(stop.arrT[0], 'YYYYMMDD HH:mm:ss').fromNow(true)
             color = ->
               switch stop.rt[0]
                 when 'Brn'
@@ -80,6 +80,7 @@ Meteor.startup ->
 
           that.response.writeHead(200, {'Content-Type': 'text/html'})
           that.response.end """
+            ++++++++++++++
             Train Schedule for #{station_name}
             #{stops}
           """

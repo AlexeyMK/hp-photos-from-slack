@@ -11,14 +11,17 @@ A endpoint api for Slack commands
 # Install Meteor
 curl https://install.meteor.com | /bin/sh
 
-# Install Meteorite
-npm install -g meteorite
-
-# Install Smart Packages
-mrt install
-
 # Start the App
 meteor
+```
+
+### Environment Variables
+
+The project requires the following environment variables to be set. You can set these in your PaaS provider (e.g. Modulus.io) or by adding a file called `api_keys.coffee` to `/server`, with contents similar to the following (this file should _not_ be kept under version control for security):
+
+```
+process.env.FORECAST_API_KEY = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXX'
+process.env.CTA_TRAIN_TRACKER_API_KEY = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXX'
 ```
 
 ## Deployment
@@ -29,30 +32,15 @@ meteor
 meteor deploy slacker
 ```
 
-## Troubleshooting
+### …on modulus.io
 
-### Permission woes?
+The project can also be deployed via [Modulus](https://modulus.io):
 
-It is *not* required that you run `sudo mrt`. If you do so, your home directory will pick up some root-owned files and you'll struggle to run `mrt` without `sudo` from then on. This isn't good.
-
-To fix the problem, try cleaning up potentially "sudo-ed" files:
-
-```bash
-sudo mrt uninstall
-sudo mrt uninstall --system
-sudo chown -R `whoami` ~/.npm
 ```
+# While in this project directory
 
-If possible, try not to install Meteorite as root either. If you have permissions problems, make sure you install with `sudo -H npm install -g meteorite`. If you've installed without `-H`, your `~/.npm` directory will be owned by root and you should run the `chown` command above to fix it.
-
-### If that fails, get rid of Meteorite and reinstall
-```
-mrt uninstall && mrt uninstall --system && npm install -g meteorite && mrt install
-```
-
-### Or uninstall and reinstall Meteor
-```
-rm -rf ~/.meteor/ && sudo rm /usr/local/bin/meteor
-
-curl https://install.meteor.com | /bin/sh
+npm install -g modulus
+modulus login
+...
+modulus deploy
 ```

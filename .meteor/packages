@@ -6,13 +6,11 @@
 standard-app-packages
 autopublish
 insecure
-preserve-inputs
 coffeescript
 jquery
-iron-router
 fastclick
 underscore
 http
-xml2js
-moment
-moment-timezone
+iron:router
+peerlibrary:xml2js
+momentjs:moment
