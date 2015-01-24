@@ -4,6 +4,11 @@ A endpoint api for Slack commands
 
 ----
 
+## Available Endpoints
+
+- `/weather/today`: Current weather for Chicago, Illinois
+- `/cta/train`: Current CTA train schedule for the Chicago & Franklin stop
+
 ## Getting Started
 
 
@@ -29,6 +34,7 @@ process.env.CTA_TRAIN_TRACKER_API_KEY = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXX'
 ### …on meteor.com
 
 ```
+meteor login
 meteor deploy slacker
 ```
 
