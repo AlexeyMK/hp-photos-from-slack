@@ -1,5 +1,6 @@
-<head>
-  <title>Slacker</title>
-</head>
-
-<body>This is an API-only application. Nothing to see here.</body>
+<template name="gallery">
+{{#each photos }}
+{{slack.url}}
+  <img src="{{slack.url}}" />
+{{/each }}
+</template>
