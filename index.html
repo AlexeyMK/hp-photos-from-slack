@@ -1,8 +1,8 @@
 <template name="gallery">
-<h1> Hacker Paradise Photos</h1>
-<div id="gallery">
-  {{#each photos }}
-    <a><img src="{{slack.thumb_360}}" /></a>
-  {{/each }}
-</div>
+<h1> Hacker Paradise ({{photos.length}} photos)</h1>
+  <div id="gallery">
+    {{#each photos }}
+      <a href="{{slack.url}}"><img src="{{slack.thumb_360}}" /></a>
+    {{/each }}
+  </div>
 </template>
