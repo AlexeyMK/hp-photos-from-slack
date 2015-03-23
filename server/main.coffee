@@ -3,6 +3,15 @@ Meteor.startup ->
   find_new_uploads_from_slack()
 
   Router.map ->
+    @route 'force-refresh',
+      where: 'server'
+      path: '/force-refresh'
+      action: ->
+        console.log "force refresh"
+        find_new_uploads_from_slack()
+        @response.writeHead(200, {'Content-Type': 'text/html'})
+        @response.end """ forcing a refresh """
+
     @route 'new-message',
       where: 'server'
       path: '/new-message'

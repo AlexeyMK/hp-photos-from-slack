@@ -14,4 +14,3 @@ Template.gallery.onRendered ->
       lastRow: 'justify',
       margins: 15
     })), 500)
-
