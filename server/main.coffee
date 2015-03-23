@@ -23,14 +23,9 @@ find_new_uploads_from_slack = ->
     Photos.upsert({uid},
                   {uid, slack: upload.file, photo_url: upload.file.url})
     # TODO(AMK) - use collection FS, save photos
+  console.log "done"
 
 channel_history_from_slack = ->
-  token_2014 = "xoxp-2621760647-2628848560-4134392741-2fbf7a"
-  token_2015 = "xoxp-3605837514-3610621308-4137017418-3ab355"
-  channelid_2014 = "C03MQP5FZ"
-  result = HTTP.get "https://slack.com/api/channels.history",
-    params:
-      token: token_2014
-      channel: channelid_2014
+  result = HTTP.get "https://slack.com/api/channels.history", params: Meteor.settings["2015"]
 
   result.data.messages
