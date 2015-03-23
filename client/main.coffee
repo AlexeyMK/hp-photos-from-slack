@@ -7,11 +7,11 @@ Meteor.startup ->
     @render 'gallery',
       data: {photos}
 
-Template.gallery.onRendered(->
-  $('#gallery').justifiedGallery({
-    rowHeight: 270,
-    lastRow: 'justify',
-    margins: 15,
-  })
-)
+Template.gallery.onRendered ->
+  window.setTimeout((->
+    $('#gallery').justifiedGallery({
+      rowHeight: 200,
+      lastRow: 'justify',
+      margins: 15
+    })), 500)
 
