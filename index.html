@@ -1,6 +1,7 @@
 <template name="gallery">
-{{#each photos }}
-{{slack.url}}
-  <img src="{{slack.url}}" />
-{{/each }}
+<div id="gallery">
+  {{#each photos }}
+    <a><img src="{{slack.url}}" /></a>
+  {{/each }}
+</div>
 </template>
