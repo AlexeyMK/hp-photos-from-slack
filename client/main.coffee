@@ -1,6 +1,12 @@
+runningAsIframe = -> 
+  window != window.top
+  
+addIframeClass = ->
+  $('body').addClass('as-iframe')
 
 Photos = new Meteor.Collection("photos")
 Meteor.startup ->
+  addIframeClass() if runningAsIframe()
   Router.route '/', ->
     photos = Photos.find({}, sort: {"slack.timestamp": -1})
     @render 'gallery',
