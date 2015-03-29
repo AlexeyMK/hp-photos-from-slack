@@ -31,7 +31,8 @@ populateTitles = ->
     $this.parent().attr('title', $this.attr('alt')))
   
 applySwipebox = ->
-  $('#gallery a').swipebox()
+  $('#gallery a').swipebox
+    hideBarsDelay: 0
       
 updateGallery = ->
   updateJustifiedGallery()
