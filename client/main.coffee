@@ -1,6 +1,6 @@
-runningAsIframe = -> 
+runningAsIframe = ->
   window != window.top
-  
+
 addIframeClass = ->
   $('body').addClass('as-iframe')
 
@@ -18,25 +18,24 @@ Template.gallery.helpers
       _.any(["jpg", "png", "upload"],
             (badEnding) => @slack.title.toLowerCase().endsWith(badEnding)) or
       @slack.title.startsWith("DSC")
-      
-updateJustifiedGallery = -> 
+
+updateJustifiedGallery = ->
   $('#gallery').justifiedGallery({
     rowHeight: 200,
     lastRow: 'nojustify',
     margins: 15})
-    
+
 populateTitles = ->
   $('#gallery a img').each(->
     $this = $(this)
     $this.parent().attr('title', $this.attr('alt')))
-  
+
 applySwipebox = ->
   $('#gallery a').swipebox
     hideBarsDelay: 0
-      
+
 updateGallery = ->
   updateJustifiedGallery()
-  populateTitles()
   applySwipebox()
 
 Template.gallery.onRendered ->

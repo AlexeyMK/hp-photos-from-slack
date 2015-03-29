@@ -2,7 +2,7 @@
 <h1> Hacker Paradise ({{photos.count}} photos)</h1>
   <div id="gallery">
     {{#each photos }}
-    <a href="{{slack.url}}"><img src="{{slack.thumb_360}}" alt="{{photo_title 'bob'}}"/></a>
+    <a href="{{slack.url}}" title="{{photo_title}}"><img src="{{slack.thumb_360}}" /></a>
     {{/each }}
   </div>
 </template>
