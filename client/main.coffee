@@ -41,4 +41,4 @@ updateGallery = ->
 Template.gallery.onRendered ->
   @autorun ->
     Photos.find().count()  # solely to force reactivity in the method
-    setTimeout(updateGallery, 250)
+    updateGallery()
