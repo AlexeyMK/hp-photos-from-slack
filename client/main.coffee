@@ -28,6 +28,8 @@ updateJustifiedGallery = ->
 applySwipebox = ->
   $('#gallery a').swipebox
     hideBarsDelay: 0
+    afterOpen: -> $('#gallery').hide()  # gallery was causing scrollbars under swipebox
+    afterClose: -> $('#gallery').show()
 
 updateGallery = ->
   updateJustifiedGallery()
