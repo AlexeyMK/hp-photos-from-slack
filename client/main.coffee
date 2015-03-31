@@ -25,14 +25,11 @@ updateJustifiedGallery = ->
     lastRow: 'nojustify',
     margins: 15})
 
-populateTitles = ->
-  $('#gallery a img').each(->
-    $this = $(this)
-    $this.parent().attr('title', $this.attr('alt')))
-
 applySwipebox = ->
   $('#gallery a').swipebox
     hideBarsDelay: 0
+    afterOpen: -> $('#gallery').hide()  # gallery was causing scrollbars under swipebox
+    afterClose: -> $('#gallery').show()
 
 updateGallery = ->
   updateJustifiedGallery()
