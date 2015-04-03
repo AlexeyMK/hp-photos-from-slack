@@ -15,7 +15,7 @@ Meteor.startup ->
 Template.gallery.helpers
   photo_title: ->
     @slack.title unless \
-      _.any(["jpg", "png", "upload"],
+      _.any(["jpg", "jpeg", "png", "gif", "upload"],
             (badEnding) => @slack.title.toLowerCase().endsWith(badEnding)) or
       @slack.title.startsWith("DSC")
 
