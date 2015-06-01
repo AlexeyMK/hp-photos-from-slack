@@ -1,5 +1,5 @@
-Photos = new Meteor.Collection("photos")
 Meteor.startup ->
+  runMigrations()
   find_new_uploads_from_slack()
 
   Router.map ->
@@ -31,10 +31,11 @@ find_new_uploads_from_slack = ->
     uid = "slack_#{upload.file.id}"
     console.log "found a file: #{upload.file.id}"
     Photos.upsert({uid},
-                  {uid, slack: upload.file, photo_url: upload.file.url})
+                  {uid, slack: upload.file, photo_url: upload.file.url, batch: BATCH_NAME})
     # TODO(AMK) - use collection FS, save photos
   console.log "done"
 
 channel_history_from_slack = ->
-  result = HTTP.get "https://slack.com/api/channels.history", params: Meteor.settings["2015"]
+  channel_details = Meteor.settings[BATCH_NAME]
+  result = HTTP.get "https://slack.com/api/channels.history", params: channel_details
   result.data.messages
