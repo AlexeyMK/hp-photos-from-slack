@@ -1,6 +1,7 @@
 Meteor.startup ->
   runMigrations()
   find_new_uploads_from_slack()
+  Meteor.publish "photos", -> Photos.find(batch: BATCH_NAME)
 
   Router.map ->
     @route 'force-refresh',
