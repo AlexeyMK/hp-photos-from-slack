@@ -1,10 +1,8 @@
 Meteor.startup ->
   runMigrations()
 
-  for batch_name, _ of Meteor.settings.batches
-    find_new_uploads_from_slack(batch_name)
-    console.log "publishing #{batch_name}"
-    Meteor.publish "photos", -> Photos.find()
+  find_new_uploads_from_slack()
+  Meteor.publish "photos", (batch=BATCH_NAME) -> Photos.find({batch})
 
   Router.map ->
     @route 'force-refresh',
@@ -27,22 +25,23 @@ Meteor.startup ->
         @response.writeHead(200, {'Content-Type': 'text/html'})
         @response.end """ received thing """
 
-find_new_uploads_from_slack = (batch_name=BATCH_NAME) ->
-  messages = channel_history_from_slack(batch_name)
-  console.log "looking for new uploads..."
-  if messages?
-    file_uploads = (m for m in messages when m.subtype is "file_share")
-    for upload in file_uploads
-      uid = "slack_#{upload.file.id}"
-      console.log "found a file: #{upload.file.id}"
-      Photos.upsert({uid},
-                    {uid, slack: upload.file, photo_url: upload.file.url, batch: batch_name})
+find_new_uploads_from_slack = ->
+  for batch, _ of Meteor.settings.batches
+    messages = channel_history_from_slack(batch)
+    console.log "looking for new uploads for #{batch}..."
+    if messages?
+      file_uploads = (m for m in messages when m.subtype is "file_share")
+      for upload in file_uploads
+        uid = "slack_#{upload.file.id}"
+        console.log "found a file: #{upload.file.id}"
+        Photos.upsert({uid},
+                      {uid, slack: upload.file, photo_url: upload.file.url, batch: batch})
     # TODO(AMK) - use collection FS, save photos
-    console.log "done"
-  else
-    console.log "could not load channel history for photos in #{batch_name}"
+      console.log "done"
+    else
+      console.log "could not load channel history for photos in #{batch}"
 
-channel_history_from_slack = (batch_name)->
+channel_history_from_slack = (batch_name) ->
   channel_details = Meteor.settings.batches[batch_name]
   result = HTTP.get "https://slack.com/api/channels.history", params: channel_details
   result.data.messages
