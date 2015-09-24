@@ -1,7 +1,10 @@
 Meteor.startup ->
   runMigrations()
-  find_new_uploads_from_slack()
-  Meteor.publish "photos", -> Photos.find(batch: BATCH_NAME)
+
+  for batch_name, _ of Meteor.settings.batches
+    find_new_uploads_from_slack(batch_name)
+    console.log "publishing #{batch_name}"
+    Meteor.publish "photos", -> Photos.find()
 
   Router.map ->
     @route 'force-refresh',
@@ -24,19 +27,22 @@ Meteor.startup ->
         @response.writeHead(200, {'Content-Type': 'text/html'})
         @response.end """ received thing """
 
-find_new_uploads_from_slack = ->
-  messages = channel_history_from_slack()
+find_new_uploads_from_slack = (batch_name=BATCH_NAME) ->
+  messages = channel_history_from_slack(batch_name)
   console.log "looking for new uploads..."
-  file_uploads = (m for m in messages when m.subtype is "file_share")
-  for upload in file_uploads
-    uid = "slack_#{upload.file.id}"
-    console.log "found a file: #{upload.file.id}"
-    Photos.upsert({uid},
-                  {uid, slack: upload.file, photo_url: upload.file.url, batch: BATCH_NAME})
+  if messages?
+    file_uploads = (m for m in messages when m.subtype is "file_share")
+    for upload in file_uploads
+      uid = "slack_#{upload.file.id}"
+      console.log "found a file: #{upload.file.id}"
+      Photos.upsert({uid},
+                    {uid, slack: upload.file, photo_url: upload.file.url, batch: batch_name})
     # TODO(AMK) - use collection FS, save photos
-  console.log "done"
+    console.log "done"
+  else
+    console.log "could not load channel history for photos in #{batch_name}"
 
-channel_history_from_slack = ->
-  channel_details = Meteor.settings[BATCH_NAME]
+channel_history_from_slack = (batch_name)->
+  channel_details = Meteor.settings.batches[batch_name]
   result = HTTP.get "https://slack.com/api/channels.history", params: channel_details
   result.data.messages

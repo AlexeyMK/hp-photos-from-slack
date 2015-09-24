@@ -7,8 +7,8 @@ addIframeClass = ->
 Meteor.startup ->
   addIframeClass() if runningAsIframe()
   Router.route '/', ->
-    Meteor.subscribe("photos")
     batch = @params.query.batch or BATCH_NAME
+    Meteor.subscribe("photos")
     photos = Photos.find({batch}, sort: {"slack.timestamp": -1})
     @render 'gallery',
       data: {photos}
