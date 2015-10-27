@@ -1,6 +1,8 @@
-Meteor-based photo gallery from [hackerparadise](hackerparadise.org)'s #photos channel on Slack.
+Meteor-based photo gallery that reads from a Slack channel.
 
-Relatively straightforward Meteor app.
+Originally built for and used by [Hacker Paradise](http://hackerparadise.org).
+
+<img src="/docs/screenshot-in-action.png"></img>
 
 ### How to add a new slack Team
 
